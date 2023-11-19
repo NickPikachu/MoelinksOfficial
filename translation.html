@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <hand>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="">
+        <title>MoeLink Website Publishing</title>
+        <link href="./bootstrap.min.css" rel="stylesheet">
+        <link href="./bootstrap-theme.min.css" rel="stylesheet">
+    </hand>
+    <style>
+      .btn-group {
+        margin-bottom: 10px;
+      }
+    #txt {
+      height: 150px;
+    }
+    </style>
+    <body>
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                      <span class="sr-only">MoeLink</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="./">MoeLink</a>
+                  </div>
+                  <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav">
+                      <li><a href="https://www.moelink.net/index.html">站點首頁</a></li>
+                      <li><a href="http://www.666so.cn/">站點資訊</a></li>
+                      <li><a href="http://www.666so.cn/">版權協議</a></li>
+                      <li><a href="http://www.666so.cn/">網站列表</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section class="section">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <h1 class="text-center">在线繁体字转换器</h1>
+                  <hr>
+                  <h3 class="text-center">输入要转换简繁体字的中文简体汉字</h3>
+                  <div class="form-group">
+                    <textarea id="txt" class="form-control aies" onfocus="OnEnter(this)" onblur="OnExit(this)">输入简体字点下面繁体字按钮进行在线转换</textarea>
+                  </div>
+                  <div class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                      <button onclick="convert(1)" type="button" class="btn btn-primary">简体转繁体</button>
+                    </div>
+                    <div class="btn-group">
+                      <button onclick="convert(0)" type="button" class="btn btn-primary">繁体转简体</button>
+                    </div>
+                  </div>
+                  <div class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                      <button onclick="copy('txt')" type="button" class="btn btn-primary">复制</button>
+                    </div>
+                    <div class="btn-group">
+                      <button onclick="cut('txt')" type="button" class="btn btn-primary">剪切</button>
+                    </div>
+                    <div class="btn-group">
+                      <button onclick="txt.value=''" type="button" class="btn btn-primary">清空</button>
+                    </div>
+                  </div>
+                  <p class="text-center aies">说明：请输入要转换简繁体的中文汉字，然后点击“简体转繁体”或“繁体转简体”按钮</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <script language="JavaScript">
+            function copy(ob) {
+              var obj=findObj(ob); if (obj) { 
+              obj.select();js=obj.createTextRange();js.execCommand("Copy");}
+            }
+        
+            function paste(ob) {
+              var obj=findObj(ob); if (obj) { 
+              obj.select();js=obj.createTextRange();js.execCommand("Paste");}
+            }
+        
+            function cut(ob) {
+              var obj=findObj(ob); if (obj) { 
+              obj.select();js=obj.createTextRange();js.execCommand("Cut");}
+            }
+        
+            function findObj(n, d) { //v4.0
+              var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+                d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+              if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+              for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=findObj(n,d.layers[i].document);
+              if(!x && document.getElementById) x=document.getElementById(n); return x;
+            }
+        
+            function charPYStr(){
+              return '啊';
+            }
+        
+            function ftPYStr(){
+              return '啊';
+            }
+        
+            function qqPYStr()
+            { 
+              return '';
+            }
+        
+            function traditionalized(cc){
+              var str='';
+              for(var i=0;i<cc.length;i++){
+                if(charPYStr().indexOf(cc.charAt(i))!=-1)
+                  str+=ftPYStr().charAt(charPYStr().indexOf(cc.charAt(i)));
+                else if(qqPYStr().indexOf(cc.charAt(i))!=-1)
+                  str+=ftPYStr().charAt(qqPYStr().indexOf(cc.charAt(i)));
+                else
+                  str+=cc.charAt(i);
+              }
+              return str;
+            }
+        
+            function simplized(cc){
+              var str='';
+              for(var i=0;i<cc.length;i++){
+                if(ftPYStr().indexOf(cc.charAt(i))!=-1)
+                  str+=charPYStr().charAt(ftPYStr().indexOf(cc.charAt(i)));
+                else if(qqPYStr().indexOf(cc.charAt(i))!=-1)
+                  str+=charPYStr().charAt(qqPYStr().indexOf(cc.charAt(i)));
+                else
+                  str+=cc.charAt(i);
+              }
+              return str;
+            }
+        
+            function convert(nOption){
+              if(nOption==0)
+                txt.value=simplized(txt.value);
+              else if(nOption==2)
+                txt.value=qqlized(txt.value);
+              else
+                txt.value=traditionalized(txt.value);
+            }
+          </script>
+          <script>
+            function OnEnter( field ) { if( field.value == field.defaultValue ) { field.value = ""; } }
+            function OnExit( field ) { if( field.value == "" ) { field.value = field.defaultValue; } }
+          </script>
+    </body>
+</html>
